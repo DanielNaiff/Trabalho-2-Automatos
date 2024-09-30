@@ -36,19 +36,23 @@ class AutomatoFinito:
             # Atualiza a posição atual (considerando a palavra e o espaço)
             posicao_atual += len(palavra) + 1  # +1 para o espaço
 
-        return posicoes
+        return posicoes, palavras_reconhecidas
 
-def destacar_palavras(texto, posicoes, palavra):
+def destacar_palavras(texto, posicoes, palavras):
     # Formatação ANSI para verde
-    destaque = f"\033[92m{palavra}\033[0m"
     nova_string = ""
     posicao_atual = 0
 
     for pos in posicoes:
         # Adiciona o texto até a posição encontrada
         nova_string += texto[posicao_atual:pos]
+        
         # Adiciona a palavra destacada
-        nova_string += destaque
+        for palavra in palavras:
+            if texto[pos:pos + len(palavra)] == palavra:
+                nova_string += f"\033[92m{palavra}\033[0m"
+                break  # Para evitar adicionar múltiplas vezes
+        
         # Atualiza a posição atual
         posicao_atual = pos + len(palavra)
 
@@ -83,11 +87,11 @@ Konrad Zuse (1910–1995). Atualmente, um microcomputador é também chamado
 computador pessoal ou ainda computador doméstico."""
 
 # Processar o texto
-posicoes = autômato.processar(entrada)
+posicoes, palavras_reconhecidas = autômato.processar(entrada)
 
 if posicoes:
     print("A palavra 'computador' foi encontrada nas seguintes posições:", posicoes)
-    texto_destacado = destacar_palavras(entrada, posicoes, "computador")
+    texto_destacado = destacar_palavras(entrada, posicoes, palavras_reconhecidas)
     print("\nTexto com palavras reconhecidas em verde:\n", texto_destacado)
 else:
     print("A palavra 'computador' não foi encontrada no texto.")
