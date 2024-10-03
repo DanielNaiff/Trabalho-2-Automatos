@@ -1,5 +1,5 @@
-def Mealy(estados, sigma, delta, transicao, transducao, q0, cadeia):
-     qTs = q0
+def mealy(estados, alfabeto_entrada, alfabeto_saida, transicao, transducao, estado_inicial, cadeia):
+     qTs = estado_inicial
      sTd = ''
      ss = ''
      for s in cadeia:
@@ -10,13 +10,18 @@ def Mealy(estados, sigma, delta, transicao, transducao, q0, cadeia):
                ss = ''
      return sTd
 
+def testar_cadeias(estados, alfabeto_entrada, alfabeto_saida, transicao, transducao, estado_inicial, vetor_cadeias):
+     for c in vetor_cadeias:
+          print(f'{c} = {mealy(estados, alfabeto_entrada, alfabeto_saida, transicao, transducao, estado_inicial, c)}')
+
+
 estados = ['q0', 'q1', 'q2', 'q3']
 
-sigma = ['25', '50', '100']
+alfabeto_entrada = ['25', '50', '100']
 
-delta = '1'
+alfabeto_saida = '1'
 
-q0 = 'q0'
+estado_inicial = 'q0'
 
 transicao = {('q0', '25'): 'q1', 
              ('q0', '50'): 'q2', 
@@ -44,4 +49,14 @@ transducao = {('q0', '25'): '',
              ('q3', '50'): '1', 
              ('q3', '100'): '1'}
 
-print(Mealy(estados, sigma, delta, transicao, transducao, q0, '252550100502550252525502510025'))
+vetor_cadeias = ['25', # ''
+                 '2550', # ''
+                 '505050', # '1'
+                 '100100', # '11'
+                 '2550502525505025', # '111'
+                 '25100251002510025', # '1111'
+                 '505050505050', # '111'
+                 '2525252525252525252525252525' # '111'
+                 ]
+
+testar_cadeias(estados, alfabeto_entrada, alfabeto_saida, transicao, transducao, estado_inicial, vetor_cadeias)
