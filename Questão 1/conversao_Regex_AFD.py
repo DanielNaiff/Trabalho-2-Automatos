@@ -1,2 +1,0 @@
-estados = []
-alfabeto = []
