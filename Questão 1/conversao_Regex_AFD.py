@@ -1,1 +1,2 @@
-estados
+estados = []
+alfabeto = []
