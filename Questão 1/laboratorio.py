@@ -19,57 +19,55 @@ class AFD:
 
 # a) (ab*c*)*
 automato_a = AFD(
-    estados={'q0', 'q1', 'q2'},
+    estados={'q0', 'q1', 'q2', 'q3'},
     simbolos_entrada={'a', 'b', 'c'},
     transicoes={
         'q0': {'a': 'q1'},
-        'q1': {'b': 'q1', 'c': 'q2'},
-        'q2': {'c': 'q2', 'a': 'q1'},
+        'q1': {'b': 'q2'},
+        'q2': {'b': 'q2', 'c': 'q3'},
+        'q3': {'c': 'q3', 'a': 'q1'}
     },
     estado_inicial='q0',
-    estados_finais={'q0', 'q2'}
+    estados_finais={'q3'}
 )
 
 # b) aaa(b | c)* | (b | c)* aaa
-automato_b = AFD(
-    estados={'q0', 'q1', 'q2', 'q3', 'q4', 'q5'},
+automato_a = AFD(
+    estados={'q0', 'q1', 'q2', 'q3'},
     simbolos_entrada={'a', 'b', 'c'},
     transicoes={
-        'q0': {'a': 'q1'},
-        'q1': {'a': 'q2'},
-        'q2': {'a': 'q3'},
-        'q3': {'b': 'q3', 'c': 'q3', 'a': 'q4'},
-        'q4': {'b': 'q5', 'c': 'q5'},
-        'q5': {'b': 'q5', 'c': 'q5'},
+        'q0': {'a': 'q1', 'b': 'q0', 'c': 'q0'},
+        'q1': {'a': 'q1'},
+        'q2': {'a': 'q2'},
+        'q3': {'b': 'q3', 'c': 'q3'}
     },
     estado_inicial='q0',
-    estados_finais={'q3', 'q5'}
+    estados_finais={'q3'}
 )
 
 # c) a*b | ab*
 automato_c = AFD(
-    estados={'q0', 'q1', 'q2', 'q3'},
+    estados={'q0', 'q1', 'q2', 'q3', 'q4'},
     simbolos_entrada={'a', 'b'},
     transicoes={
-        'q0': {'a': 'q1', 'b': 'q3'},
-        'q1': {'a': 'q1', 'b': 'q2'},
-        'q2': {'b': 'q2'},
-        'q3': {}
+        'q0': {'a': 'q1', 'b': 'q2'},
+        'q1': {'a': 'q1', 'b': 'q3'},
+        'q2': {},
+        'q3': {'b': 'q4'},
+        'q4': {'b': 'q4'}
     },
     estado_inicial='q0',
-    estados_finais={'q1', 'q2', 'q3'}
+    estados_finais={'q1', 'q2', 'q3','q4'}
 )
 
 # d) a*b* (a | ac*)
 automato_d = AFD(
-    estados={'q0', 'q1', 'q2', 'q3', 'q4'},
+    estados={'q0', 'q1', 'q2'},
     simbolos_entrada={'a', 'b', 'c'},
     transicoes={
-        'q0': {'a': 'q1'},
-        'q1': {'a': 'q1', 'b': 'q2'},
-        'q2': {'b': 'q2', 'a': 'q3'},
-        'q3': {'a': 'q3', 'c': 'q4'},
-        'q4': {'c': 'q4'},
+        'q0': {'a': 'q0', 'b': 'q1'},
+        'q1': {'a': 'q2', 'b': 'q1'},
+        'q2': {'c': 'q2'},
     },
     estado_inicial='q0',
     estados_finais={'q2', 'q4'}
