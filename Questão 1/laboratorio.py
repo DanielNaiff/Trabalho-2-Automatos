@@ -46,7 +46,7 @@ automato_b = AFD(
         'q7': {'a': 'q8'},                         # q7 vai para q8 com 'a'
     },
     estado_inicial='q0',
-    estados_finais={'q4', 'q8'}  # q4 e q8 são estados finais
+    estados_finais={'q3', 'q4', 'q8'}  # 13, q4 e q8 são estados finais
 )
 
 # c) a*b | ab*
@@ -86,35 +86,202 @@ def testar_automato(automato, strings_teste):
         print(f"Entrada: '{string}' -> {'Aceita' if resultado else 'Rejeitada'}")
 
 # Testes
-# a) (ab*c*)*
-strings_teste_a_aceitos = ['ab', 'abc', 'abcc', 'abbbbcccc', '', 'ac']
-strings_teste_a_nao_aceitos = ['a', 'b', 'c', 'abcx']
+# Testes unificados para todas as linguagens
+# Testes para todas as linguagens
 
-# b) aaa(b | c)* | (b | c)* aaa
-strings_teste_b_aceitos = ['aaa', 'aaab', 'aaac', 'bbb']
-strings_teste_b_nao_aceitos = ['a', 'b', 'c', 'aac']
+# Testes para todas as linguagens
 
-# c) a*b | ab*
-strings_teste_c_aceitos = ['a', 'aa', 'b', 'ab']
-strings_teste_c_nao_aceitos = ['ba', 'bba', 'c', 'abbc']
+# (ab*c*)*
+strings_teste_a = [
+    'ab', 'abc', 'abcc', 'abbbbcccc', '', 'ac', 'a', 'b', 'c', 'abcx',   
+    'abbbbb', 'accc', 'abac', 'abbccc', 'abbbbbcccccc', 'aabb',        
+    'abbb', 'abcb', 'abccccc', 'a', 'abbbbbc', 'abcabc',                
+]  # Rejeitados a partir de 'abbb' (índice 16)
 
-# d) a*b* (a | ac*)
-strings_teste_d_aceitos = ['a', 'ab', 'aa', 'abbb']
-strings_teste_d_nao_aceitos = ['b', 'ac', 'aab', 'aaa']
+# aaa(b | c)* | (b | c)* aaa
+strings_teste_b = [
+    'aaa', 'aaab', 'aaac', 'bbb', 'a', 'b', 'c', 'aac',                # Casos aceitos (0 a 7)
+    'aaaccc', 'bbbbaaa', 'aaabc', 'abcaaa', 'ccccaa', 'aaaaaa',       # Novos casos aceitos (8 a 13)
+    'ccaaaa', 'baaa', 'bbaaa', 'aaaaab', 'bbbcaaa', 'caaaaa',        # Novos casos rejeitados (14 a 19)
+]  # Rejeitados a partir de 'ccaaaa' (índice 14)
+
+# a*b | ab*
+strings_teste_c = [
+    'a', 'aa', 'b', 'ab', 'ba', 'bba', 'c', 'abbc',                   # Casos aceitos (0 a 7)
+    'aaaab', 'aab', 'bbaa', 'aaab', 'abbbbb', 'aaaaa',                # Novos casos aceitos (8 a 13)
+    'abab', 'aaabbb', 'abbbbbbb', 'a', 'bb', 'aaaa',                 # Novos casos rejeitados (14 a 19)
+]  # Rejeitados a partir de 'abab' (índice 14)
+
+# a*b* (a | ac*)
+strings_teste_d = [
+    'a', 'ab', 'aa', 'abbb', 'b', 'ac', 'aab', 'aaa',                 # Casos aceitos (0 a 7)
+    'aabbb', 'aaaaac', 'abbbbb', 'abac', 'aabc', 'accc',              # Novos casos aceitos (8 a 13)
+    'aaaac', 'acccccc', 'ababab', 'aac', 'aabbbb', 'bbaaa',          # Novos casos rejeitados (14 a 19)
+]  # Rejeitados a partir de 'aaaac' (índice 14)
+
 
 # Executando os testes
 print("Linguagem a:")
-testar_automato(automato_a, strings_teste_a_aceitos)
-testar_automato(automato_a, strings_teste_a_nao_aceitos)
+testar_automato(automato_a, strings_teste_a)
 
 print("\nLinguagem b:")
-testar_automato(automato_b, strings_teste_b_aceitos)
-testar_automato(automato_b, strings_teste_b_nao_aceitos)
+testar_automato(automato_b, strings_teste_b)
 
 print("\nLinguagem c:")
-testar_automato(automato_c, strings_teste_c_aceitos)
-testar_automato(automato_c, strings_teste_c_nao_aceitos)
+testar_automato(automato_c, strings_teste_c)
 
 print("\nLinguagem d:")
-testar_automato(automato_d, strings_teste_d_aceitos)
-testar_automato(automato_d, strings_teste_d_nao_aceitos)
+testar_automato(automato_d, strings_teste_d)
+
+
+
+
+# Exemplos para a Linguagem a: 
+# (
+# 𝑎
+# 𝑏
+# ∗
+# 𝑐
+# ∗
+# )
+# ∗
+# (ab∗c∗)∗
+
+# ab
+# abc
+# abcc
+# abbbbcccc
+# <empty>
+# ac
+# a
+# b
+# c
+# abcx
+# abbbbb
+# accc
+# abac
+# abbccc
+# abbbbbcccccc
+# aabb
+# abbb
+# abcb
+# abccccc
+# a
+# abbbbbc
+# abcabc
+
+
+# Exemplos para a Linguagem b: 
+# 𝑎
+# 𝑎
+# 𝑎
+# (
+# 𝑏
+# ∣
+# 𝑐
+# )
+# ∗
+# ∣
+# (
+# 𝑏
+# ∣
+# 𝑐
+# )
+# ∗
+# 𝑎
+# 𝑎
+# 𝑎
+# aaa(b∣c)∗∣(b∣c)∗aaa
+# css
+# Copiar código
+# aaa
+# aaab
+# aaac
+# bbb
+# a
+# b
+# c
+# aac
+# aaaccc
+# bbbbaaa
+# aaabc
+# abcaaa
+# ccccaa
+# aaaaaa
+# ccaaaa
+# baaa
+# bbaaa
+# aaaaab
+# bbbcaaa
+# caaaaa
+
+
+# Exemplos para a Linguagem c: 
+# 𝑎
+# ∗
+# 𝑏
+# ∣
+# 𝑎
+# 𝑏
+
+
+# ∗
+# a∗b∣ab∗
+
+
+# a
+# aa
+# b
+# ab
+# ba
+# bba
+# c
+# abbc
+# aaaab
+# aab
+# bbaa
+# aaab
+# abbbbb
+# aaaaa
+# abab
+# aaabbb
+# abbbbbbb
+# a
+# bb
+# aaaa
+
+# Exemplos para a Linguagem d: 
+# 𝑎
+# ∗
+# 𝑏
+# ∗
+# (
+# 𝑎
+# ∣
+# 𝑎
+# 𝑐
+# ∗
+# )
+
+# a∗b∗(a∣ac∗)
+
+# a
+# ab
+# aa
+# abbb
+# b
+# ac
+# aab
+# aaa
+# aabbb
+# aaaaac
+# abbbbb
+# abac
+# aabc
+# accc
+# aaaac
+# acccccc
+# ababab
+# aac
+# aabbbb
+# bbaaa
