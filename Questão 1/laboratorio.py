@@ -86,12 +86,6 @@ def testar_automato(automato, strings_teste):
         print(f"Entrada: '{string}' -> {'Aceita' if resultado else 'Rejeitada'}")
 
 
-
-
-
-
-
-
 strings_teste_a = [
     'ab', 'abc', 'abcc', 'abbbbcccc', '', 'ac', 'a', 'b', 'c', 'abcx',   
     'abbbbb', 'accc', 'abac', 'abbccc', 'abbbbbcccccc', 'aabb',        
