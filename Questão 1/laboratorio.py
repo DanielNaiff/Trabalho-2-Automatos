@@ -51,12 +51,12 @@ automato_b = AFD(
 
 
 automato_c = AFD(
-    estados={'q0', 'q1', 'q2', 'q3'},
+    estados={'q0', 'q1', 'q2', 'q3', 'q4'},
     simbolos_entrada={'a', 'b'},
     transicoes={
         'q0': {'a': 'q1', 'b': 'q2'},  
-        'q1': {'a': 'q1', 'b': 'q3'},  
-        'q2': {},                       
+        'q1': {'a': 'q3', 'b': 'q2'},  
+        'q2': {'b':'q2'},                       
         'q3': {'b': 'q3'},             
     },
     estado_inicial='q0',
