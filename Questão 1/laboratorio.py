@@ -57,10 +57,10 @@ automato_c = AFD(
         'q0': {'a': 'q1', 'b': 'q2'},  
         'q1': {'a': 'q3', 'b': 'q2'},  
         'q2': {'b':'q2'},                       
-        'q3': {'b': 'q3'},             
+        'q3': {'a': 'q3','b': 'q4'},             
     },
     estado_inicial='q0',
-    estados_finais={'q1', 'q2', 'q3'}  
+    estados_finais={'q1', 'q2', 'q3', 'q4'}  
 )
 
 
